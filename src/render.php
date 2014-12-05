@@ -9,7 +9,7 @@
  * @copyright 2014 David Cramer
  */
 
-namespace caldera\metaplate\core;
+namespace calderawp\metaplate\core;
 
 use Handlebars\Handlebars;
 

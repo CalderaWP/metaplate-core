@@ -2,19 +2,19 @@
 /**
  * Sets up data for loading metaplates and the fields.
  *
- * @package caldera\metaplate
+ * @package caldera\metaplate\core
  * @author    David Cramer <david@digilab.co.za>
  * @license   GPL-2.0+
  * @link
  * @copyright 2014 David Cramer
  */
 
-namespace caldera\metaplate\core;
+namespace calderawp\metaplate\core;
 
 /**
  * Class data
  *
- * @package caldera\metaplate
+ * @package caldera\metaplate\core
  */
 class data {
 	/**

@@ -2,20 +2,20 @@
 /**
  * Metaplate main class
  *
- * @package caldera\metaplate
+ * @package caldera\metaplate\core
  * @author    David Cramer <david@digilab.co.za>
  * @license   GPL-2.0+
  * @link
  * @copyright 2014 David Cramer
  */
 
-namespace caldera\metaplate\core;
+namespace calderawp\metaplate\core;
 
 
 /**
  * Class metaplate
  *
- * @package caldera\metaplate
+ * @package caldera\metaplate\core
  */
 class init {
 	/**

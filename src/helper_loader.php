@@ -2,20 +2,20 @@
 /**
  * Validate and add additional Handlebars helpers
  *
- * @package caldera\metaplate
+ * @package caldera\metaplate\core
  * @author    Josh Pollock <Josh@JoshPress.net>
  * @license   GPL-2.0+
  * @link      
  * @copyright 2014 Josh Pollock
  */
 
-namespace caldera\metaplate\core;
+namespace calderawp\metaplate\core;
 
 
 /**
  * Class helper_loader
  *
- * @package caldera\metaplate
+ * @package caldera\metaplate\core
  */
 class helper_loader {
 	/**
