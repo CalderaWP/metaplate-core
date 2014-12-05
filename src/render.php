@@ -33,9 +33,6 @@ class render {
 		if( empty( $meta_stack ) ){
 			return $content;
 		}
-		// add filter.
-		$magic = new filter\magictag();
-		$content = $magic->do_magic_tag( $content );
 
 		$style_data = null;
 		$script_data = null;
@@ -76,6 +73,10 @@ class render {
 		if( !empty( $script_data ) ){
 			$content .= '<script type="text/javascript">' . $script_data . '</script>';
 		}
+
+		// add magic filter.
+		$magic = new filter\magictag();
+		$content = $magic->do_magic_tag( $content );
 
 		return $content;
 
