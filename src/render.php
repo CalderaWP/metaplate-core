@@ -121,10 +121,10 @@ class render {
 		return  array(
 			array(
 				'name' => 'is',
-				'class' => 'caldera\helpers\is' ),
+				'class' => 'calderawp\helpers\is' ),
 			array(
 				'name' => '_image',
-				'class' => 'caldera\helpers\image' ),
+				'class' => 'calderawp\helpers\image' ),
 		);
 
 	}
