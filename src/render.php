@@ -12,6 +12,7 @@
 namespace calderawp\metaplate\core;
 
 use Handlebars\Handlebars;
+use calderawp\filter;
 
 class render {
 
@@ -33,7 +34,7 @@ class render {
 			return $content;
 		}
 		// add filter.
-		$magic = new calderawp\filter\magictag();
+		$magic = new filter\magictag();
 		$content = $magic->do_magic_tag( $content );
 
 		$style_data = null;
