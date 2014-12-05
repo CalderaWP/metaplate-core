@@ -32,6 +32,9 @@ class render {
 		if( empty( $meta_stack ) ){
 			return $content;
 		}
+		// add filter.
+		$magic = new calderawp\filter\magictag();
+		$content = $magic->do_magic_tag( $content );
 
 		$style_data = null;
 		$script_data = null;
