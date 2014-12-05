@@ -15,7 +15,8 @@
         {
             "name": "Josh Pollock",
             "homepage": "http://joshpress.net",
-            "role": "Josh@JoshPress.net"
+            "email": "Josh@JoshPress.net",
+            "role" : "Developer"
         }
     ],
     "require": {
