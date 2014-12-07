@@ -22,22 +22,39 @@ class render {
 	 * @uses "the_content" filter
 	 *
 	 * @param string $content Post content
+	 * @param array|null $meta_stalk Optional. The metaplate to use to render the data. If is null, the default, one will be load, if possible, based on current global $post object.
+	 * @param array|null $template_data Optional. Prepared field data to render metaplate with. If is null, the default, meta stalk will be retrieved, if possible, based on current global $post object.
 	 *
-	 * @return    string    rendered HTML with templates applied
+	 * @return    string    Rendered HTML with templates applied--if templates and data were provided.
 	 */
-	public function render_metaplate( $content ) {
+	public function render_metaplate( $content, $meta_stack = null, $template_data = null ) {
 
-		global $post;
+		if ( is_null( $meta_stack ) ) {
+			$meta_stack = data::get_active_metaplates();
+		}
 
-		$meta_stack = data::get_active_metaplates();
+
 		if( empty( $meta_stack ) ){
 			return $content;
+
 		}
+
+		if ( is_null( $template_data ) ) {
+			global $post;
+			$template_data = data::get_custom_field_data( $post->ID );
+		}
+
+		if( ! $template_data || empty( $template_data ) ){
+			return $content;
+
+		}
+
+		// add filter.
+		$magic = new filter\magictag();
+		$content = $magic->do_magic_tag( $content );
 
 		$style_data = null;
 		$script_data = null;
-
-		$template_data = data::get_custom_field_data( $post->ID );
 
 		$engine = new Handlebars;
 
