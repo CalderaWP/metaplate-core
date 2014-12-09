@@ -24,10 +24,11 @@ class render {
 	 * @param string $content Post content
 	 * @param array|null $meta_stalk Optional. The metaplate to use to render the data. If is null, the default, one will be load, if possible, based on current global $post object.
 	 * @param array|null $template_data Optional. Prepared field data to render metaplate with. If is null, the default, meta stalk will be retrieved, if possible, based on current global $post object.
+	 * @param string|null $placement Optional. Where to put the template output, before, after or in place of $content. If is null, option from metaplate is used. Default is--funcitonally speaking--replace. Options: prepend|append|replace|null.
 	 *
 	 * @return    string    Rendered HTML with templates applied--if templates and data were provided.
 	 */
-	public function render_metaplate( $content, $meta_stack = null, $template_data = null ) {
+	public function render_metaplate( $content, $meta_stack = null, $template_data = null, $placement = null ) {
 
 		if ( is_null( $meta_stack ) ) {
 			$meta_stack = data::get_active_metaplates();
@@ -69,6 +70,9 @@ class render {
 			// check JS
 			$script_data .= $engine->render( $metaplate['js']['code'], $template_data );
 
+			if ( ! is_null( $placement ) ) {
+				$metaplate[ 'placement' ] = $placement;
+			}
 			if ( ! isset( $metaplate['placement'] ) || ! in_array( $metaplate['placement'], array( 'prepend', 'append', 'replace' ) ) ) {
 				$metaplate['placement'] = 'replace';
 			}
