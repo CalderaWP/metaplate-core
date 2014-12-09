@@ -33,7 +33,7 @@ class data {
 		global $post;
 
 		// GET METAPLATEs
-		$metaplates = get_option( '_metaplates_registry' );
+		$metaplates = self::get_registry();
 		$meta_stack = array();
 		foreach( $metaplates as $metaplate_try ){
 			$is_plate = self::get_metaplate( $metaplate_try['id'] );
