@@ -16,7 +16,7 @@ namespace calderawp\metaplate\core;
  *
  * @package caldera\metaplate\core
  */
-class data {
+class data extends init{
 	/**
 	 * Get the metaplates for the post
 	 *
@@ -119,14 +119,75 @@ class data {
 	}
 
 	/**
-	 * Get a metaplate
+	 * Get a metaplate by ID or slug
 	 *
 	 * @param string $id
 	 *
 	 * @return array|bool
 	 */
 	public static function get_metaplate( $id ) {
-		return get_option( $id );
+		$metaplates = self::get_registry();
+		if ( array_key_exists( $id, $metaplates ) ) {
+			return get_option( $id );
+		}
+		else {
+			$metaplate = self::get_metaplate_id_by_slug( $id );
+			if ( is_string( $metaplate ) ) {
+				return self::get_metaplate( $metaplate );
+
+			}
+
+		}
+
+
+	}
+
+	/**
+	 * Get the metaplate registry
+	 *
+	 * @return array|bool
+	 */
+	public static function get_registry() {
+		return get_option( self::$registry_option_name );
+	}
+
+	/**
+	 * Get a metaplate's ID using its slug
+	 *
+	 * @param string $slug The metaplate's slug.
+	 * @param null|array $metaplates Optional. The metaplate registry to look in.
+	 *
+	 * @return bool|array
+	 */
+	public static function get_metaplate_id_by_slug( $slug, $metaplates = null ) {
+		if ( is_null( $metaplates ) ) {
+			$metaplates = self::get_registry();
+		}
+
+		if ( is_array( $metaplates ) ) {
+			$search = wp_list_pluck( $metaplates, 'slug' );
+			return array_search( $slug, $search );
+
+		}
+
+		return false;
+	}
+
+	/**
+	 * Update registry of metaplates
+	 *
+	 * Note: Does not save the metaplate itself.
+	 *
+	 * @param array $new_value The new item to add.
+	 * @param string $id Id of new item to add.
+	 *
+	 * @return bool
+	 */
+	public static  function update_registry( $new_value, $id ) {
+		$registry = $this->get_registry();
+		$registry[ $id ] = $new_value;
+
+		return update_option( self::registry_option_name, $registry );
 
 	}
 
