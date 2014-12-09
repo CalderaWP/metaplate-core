@@ -30,7 +30,7 @@ class data {
 		$metaplates = get_option( '_metaplates_registry' );
 		$meta_stack = array();
 		foreach( $metaplates as $metaplate_try ){
-			$is_plate = get_option( $metaplate_try['id'] );
+			$is_plate = self::get_metaplate( $metaplate_try['id'] );
 			if( !empty( $is_plate['post_type'][$post->post_type] ) ){
 				switch ($is_plate['page_type']) {
 					case 'single':
@@ -115,6 +115,18 @@ class data {
 		}
 
 		return $template_data;
+
+	}
+
+	/**
+	 * Get a metaplate
+	 *
+	 * @param string $id
+	 *
+	 * @return array|bool
+	 */
+	public static function get_metaplate( $id ) {
+		return get_option( $id );
 
 	}
 
