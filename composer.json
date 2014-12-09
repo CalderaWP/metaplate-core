@@ -27,6 +27,7 @@
     "autoload": {
         "psr-4": {
             "calderawp\\metaplate\\core\\": "src"
-        }
+        },
+        "files"   : [ "src/functions.php" ]
     }
 }
