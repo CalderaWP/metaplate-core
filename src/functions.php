@@ -19,7 +19,7 @@ if ( ! function_exists( 'caldera_metaplate_do_metaplate' ) ) :
 	 *
 	 * @param string $placement Optional. Where to put the template output, before, after or in place of $content. Default is replace. Options: prepend|append|replace
 	 *
-	 * @return string
+	 * @return string|null The rendered content if it was able to be rendered.
 	 */
 	function caldera_metaplate_do_metaplate( $content, $metaplate, $data, $placement = 'replace' ) {
 		if ( is_string( $metaplate ) ) {
@@ -42,6 +42,13 @@ if ( ! function_exists( 'caldera_metaplate_do_metaplate' ) ) :
 endif;
 
 if ( ! function_exists( 'caldera_metaplate_get_metastack' ) ) {
+	/**
+	 * Get metaplate data by ID or slug
+	 *
+	 * @param string $id_or_slug
+	 *
+	 * @return array|bool Returns the array for the metaplate or false if not found.
+	 */
 	function caldera_metaplate_get_metastack( $id_or_slug ) {
 		return calderawp\metaplate\core\data::get_metaplate( $id_or_slug );
 
