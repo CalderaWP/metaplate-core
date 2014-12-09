@@ -139,10 +139,18 @@ class data {
 		else {
 			$metaplate = self::get_metaplate_id_by_slug( $id );
 			if ( is_string( $metaplate ) ) {
-				return self::get_metaplate( $metaplate );
+				$metaplate = self::get_metaplate( $metaplate );
 
 			}
 
+		}
+
+		if ( is_array( $metaplate ) ) {
+			return $metaplate;
+		}
+
+		if ( is_string( $metaplate ) ) {
+			return json_decode( $metaplate );
 		}
 
 
