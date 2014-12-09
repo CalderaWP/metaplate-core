@@ -10,29 +10,42 @@
  */ 
 
 if ( ! function_exists( 'caldera_metaplate_do_metaplate' ) ) :
-	function caldera_metaplate_do_metaplate( $post_content, $metplate, $data ) {
-		if ( is_string(  $metplate ) ) {
-			$metplate = calderawp\metaplate\core\data::get_metaplate( $metplate );
+	/**
+	 * Render and return a metaplate
+	 *
+	 * @param string $content Content to add metaplate to.
+	 * @param string|array $metaplate The content
+	 * @param array $data The field data to use with the template.
+	 *
+	 * @param string $placement Optional. Where to put the template output, before, after or in place of $content. Default is replace. Options: prepend|append|replace
+	 *
+	 * @return string
+	 */
+	function caldera_metaplate_do_metaplate( $content, $metaplate, $data, $placement = 'replace' ) {
+		if ( is_string( $metaplate ) ) {
+			$metaplate = calderawp\metaplate\core\data::get_metaplate( $metaplate );
 		}
 
-		if ( ! is_array( $metplate ) ) {
+		if ( ! is_array( $metaplate ) ) {
 			return;
 
 		}
 
 		$render = new calderawp\metaplate\core\render();
-		$output = $render->render_metaplate( $post_content, $metplate, $data );
+		$output = $render->render_metaplate( $content, array( $metaplate ), $data, $placement );
 		if ( is_string( $output ) ) {
 			return $output;
 
 		}
+
 	}
 endif;
 
 if ( ! function_exists( 'caldera_metaplate_get_metastack' ) ) {
-	function caldera_metaplate_get_metastack( $id ) {
-		return calderawp\metaplate\core\data::get_metaplate( $id );
+	function caldera_metaplate_get_metastack( $id_or_slug ) {
+		return calderawp\metaplate\core\data::get_metaplate( $id_or_slug );
 
 	}
 }
+
 
