@@ -16,7 +16,13 @@ namespace calderawp\metaplate\core;
  *
  * @package caldera\metaplate\core
  */
-class data extends init{
+class data {
+
+	/**
+	 * @var string The key for the metaplate registry
+	 */
+	public static $registry_option_name = '_metaplates_registry';
+
 	/**
 	 * Get the metaplates for the post
 	 *
@@ -183,11 +189,11 @@ class data extends init{
 	 *
 	 * @return bool
 	 */
-	public static  function update_registry( $new_value, $id ) {
-		$registry = $this->get_registry();
+	public static function update_registry( $new_value, $id ) {
+		$registry = self::get_registry();
 		$registry[ $id ] = $new_value;
 
-		return update_option( self::registry_option_name, $registry );
+		return update_option( self::$registry_option_name, $registry );
 
 	}
 
