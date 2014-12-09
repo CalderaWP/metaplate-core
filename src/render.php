@@ -69,6 +69,10 @@ class render {
 			// check JS
 			$script_data .= $engine->render( $metaplate['js']['code'], $template_data );
 
+			if ( ! isset( $metaplate['placement'] ) || ! in_array( $metaplate['placement'], array( 'prepend', 'append', 'replace' ) ) ) {
+				$metaplate['placement'] = 'replace';
+			}
+
 			switch ( $metaplate['placement'] ){
 				case 'prepend':
 					$content = $engine->render( $metaplate['html']['code'], $template_data ) . $content;
