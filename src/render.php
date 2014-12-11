@@ -61,31 +61,34 @@ class render {
 
 		$engine = $this->helpers( $engine );
 
-
 		foreach( $meta_stack as $metaplate ){
+
 			// apply filter to data for this metaplate
 			$template_data = apply_filters( 'metaplate_data', $template_data, $metaplate );
 			// check CSS
-			$style_data .= $engine->render( $metaplate['css']['code'], $template_data );
+			$style_data .= $engine->render( $metaplate[ 'css' ][ 'code' ], $template_data );
 			// check JS
-			$script_data .= $engine->render( $metaplate['js']['code'], $template_data );
+			$script_data .= $engine->render( $metaplate[ 'js' ][ 'code' ] , $template_data );
 
 			if ( ! is_null( $placement ) ) {
 				$metaplate[ 'placement' ] = $placement;
 			}
+			
 			if ( ! isset( $metaplate['placement'] ) || ! in_array( $metaplate['placement'], array( 'prepend', 'append', 'replace' ) ) ) {
 				$metaplate['placement'] = 'replace';
 			}
 
+			$template = $metaplate[ 'html' ][ 'code' ];
+
 			switch ( $metaplate['placement'] ){
 				case 'prepend':
-					$content = $engine->render( $metaplate['html']['code'], $template_data ) . $content;
+					$content = $engine->render( $template, $template_data ) . $content;
 					break;
 				case 'append':
-					$content .= $engine->render( $metaplate['html']['code'], $template_data );
+					$content .= $engine->render( $template, $template_data );
 					break;
 				case 'replace':
-					$content = $engine->render( str_replace( '{{content}}', $content, $metaplate['html']['code']), $template_data );
+					$content = $engine->render( str_replace( '{{content}}', $content, $template ), $template_data );
 					break;
 			}
 		}
