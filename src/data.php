@@ -153,8 +153,36 @@ class data {
 			$metaplate = (array) $metaplate;
 		}
 
+		$metaplate = self::code( $metaplate );
+
 		return (array) $metaplate;
 
+	}
+
+	/**
+	 * Make sure the code fields are arrays not objects and are set
+	 *
+	 * @param array $metaplate The metaplate
+	 *
+	 * @return array The metaplate with the code fields as arrays
+	 */
+	private static function code( $metaplate ) {
+		foreach ( array( 'html', 'js', 'css' ) as $field ) {
+			if ( isset( $metaplate[ $field ] ) ) {
+				if ( is_object( $metaplate[ $field ] ) ) {
+					$value = $metaplate[ $field ];
+					$value = $value->code;
+					unset( $metaplate[ $field ] );
+					$metaplate[ $field ]['code' ] = $value;
+				}
+
+			}
+			else {
+				$metaplate[ $field ][ 'code' ] = 1;
+			}
+		}
+
+		return $metaplate;
 
 	}
 
