@@ -145,13 +145,15 @@ class data {
 
 		}
 
-		if ( is_array( $metaplate ) ) {
-			return $metaplate;
+		if ( is_string( $metaplate ) ) {
+			$metaplate =  json_decode( $metaplate );
 		}
 
-		if ( is_string( $metaplate ) ) {
-			return json_decode( $metaplate );
+		if ( is_object( $metaplate ) ) {
+			$metaplate = (array) $metaplate;
 		}
+
+		return (array) $metaplate;
 
 
 	}
