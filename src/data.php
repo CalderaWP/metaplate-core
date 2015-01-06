@@ -134,7 +134,7 @@ class data {
 	public static function get_metaplate( $id ) {
 		$metaplates = self::get_registry();
 		if ( array_key_exists( $id, $metaplates ) ) {
-			return get_option( $id );
+			$metaplate = get_option( $id );
 		}
 		else {
 			$metaplate = self::get_metaplate_id_by_slug( $id );
@@ -146,7 +146,7 @@ class data {
 		}
 
 		if ( is_string( $metaplate ) ) {
-			$metaplate =  json_decode( $metaplate );
+			$metaplate =  json_decode( $metaplate, ARRAY_A );
 		}
 
 		if ( is_object( $metaplate ) ) {
