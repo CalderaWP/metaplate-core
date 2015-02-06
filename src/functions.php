@@ -23,13 +23,19 @@ if ( ! function_exists( 'caldera_metaplate_render' ) ) :
 			$metaplate = calderawp\metaplate\core\data::get_metaplate( $metaplate );
 		}
 
+
 		if ( ! is_array( $metaplate ) ) {
 			return;
 
 		}
 
+		$template_data = null;
+		if ( ! is_null( $post_id ) ) {
+			$template_data = calderawp\metaplate\core\data::get_custom_field_data( $post_id );
+		}
+
 		$render = new calderawp\metaplate\core\render();
-		$output = $render->render_metaplate( null, array( $metaplate ) );
+		$output = $render->render_metaplate( null, array( $metaplate ), $template_data );
 		if ( is_string( $output ) ) {
 			return $output;
 
@@ -62,21 +68,33 @@ if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
 	 * @return array|bool Returns the array for the metaplate or false if not found.
 	 */
 	function caldera_metaplate_shortcode( $atts, $content ) {
+		$atts = shortcode_atts( array(
+			'id' => false,
+			'slug' => false,
+			'post_id' => false,
+			'template_code' => false,
+			'css' => false,
+		), $atts, 'caldera_metaplate' );
 
-		if( !empty( $atts['id'] ) ){
-			$metaplate = calderawp\metaplate\core\data::get_metaplate( $atts['id'] );
+		if( $atts['id']  ){
+			$metaplate = caldera_metaplate_get_metastack( $atts['id'] );
 		}elseif ( !empty( $atts['slug'] ) ) {
-			$metaplate = calderawp\metaplate\core\data::get_metaplate( $atts['slug'] );
+			$metaplate = caldera_metaplate_get_metastack( $atts['slug'] );
+		}else{
+			return;
+
 		}
 
-		if( empty( $metaplate ) ){
+		if( ! is_array( $metaplate ) || empty( $metaplate ) ) {
 			return;
+
 		}
 		
 		$render = new calderawp\metaplate\core\render();
 		$output = $render->render_metaplate( $content, array( $metaplate ) );
 		if ( is_string( $output ) ) {
 			return $output;
+
 		}
 
 	}

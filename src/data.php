@@ -71,6 +71,11 @@ class data {
 
 		$raw_data = get_post_meta( $post_id  );
 
+		if ( ! is_array( $raw_data ) ) {
+			return;
+
+		}
+
 		// break to standard arrays
 		$template_data = array();
 		foreach( $raw_data as $meta_key=>$meta_data ){
