@@ -29,7 +29,7 @@ if ( ! function_exists( 'caldera_metaplate_render' ) ) :
 		}
 
 		$render = new calderawp\metaplate\core\render();
-		$output = $render->render_metaplate( $content, array( $metaplate ) );
+		$output = $render->render_metaplate( null, array( $metaplate ) );
 		if ( is_string( $output ) ) {
 			return $output;
 
@@ -48,6 +48,36 @@ if ( ! function_exists( 'caldera_metaplate_get_metastack' ) ) {
 	 */
 	function caldera_metaplate_get_metastack( $id_or_slug ) {
 		return calderawp\metaplate\core\data::get_metaplate( $id_or_slug );
+
+	}
+}
+
+
+if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
+	/**
+	 * renders the metaplace as a shortcode
+	 *
+	 * @param string $id_or_slug
+	 *
+	 * @return array|bool Returns the array for the metaplate or false if not found.
+	 */
+	function caldera_metaplate_shortcode( $atts, $content ) {
+
+		if( !empty( $atts['id'] ) ){
+			$metaplate = calderawp\metaplate\core\data::get_metaplate( $atts['id'] );
+		}elseif ( !empty( $atts['slug'] ) ) {
+			$metaplate = calderawp\metaplate\core\data::get_metaplate( $atts['slug'] );
+		}
+
+		if( empty( $metaplate ) ){
+			return;
+		}
+		
+		$render = new calderawp\metaplate\core\render();
+		$output = $render->render_metaplate( $content, array( $metaplate ) );
+		if ( is_string( $output ) ) {
+			return $output;
+		}
 
 	}
 }
