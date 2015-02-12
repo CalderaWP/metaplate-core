@@ -100,4 +100,3 @@ if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
 	}
 }
 
-

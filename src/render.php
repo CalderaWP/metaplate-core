@@ -65,10 +65,20 @@ class render {
 
 			// apply filter to data for this metaplate
 			$template_data = apply_filters( 'metaplate_data', $template_data, $metaplate );
+
 			// check CSS
-			$style_data .= $engine->render( $metaplate[ 'css' ][ 'code' ], $template_data );
-			// check JS
-			$script_data .= $engine->render( $metaplate[ 'js' ][ 'code' ] , $template_data );
+			if ( isset( $metaplate[ 'css' ][ 'code' ] )  ) {
+				$style_data .= $engine->render( $metaplate['css']['code'], $template_data );
+			} else {
+				$style_data = '';
+			}
+
+			if ( isset( $metaplate['js']['code'] )  ) {
+				// check JS
+				$script_data .= $engine->render( $metaplate['js']['code'], $template_data );
+			} else {
+				$script_data = '';
+			}
 
 			if ( ! is_null( $placement ) ) {
 				$metaplate[ 'placement' ] = $placement;
@@ -91,14 +101,16 @@ class render {
 					$content = $engine->render( str_replace( '{{content}}', $content, $template ), $template_data );
 					break;
 			}
+
 		}
 
 		// insert CSS
-		if( !empty( $style_data ) ){
+		if( ! empty( $style_data ) ){
 			$content = '<style>' . $style_data . '</style>' . $content;
 		}
+
 		// insert JS
-		if( !empty( $script_data ) ){
+		if( ! empty( $script_data ) ){
 			$content .= '<script type="text/javascript">' . $script_data . '</script>';
 		}
 
