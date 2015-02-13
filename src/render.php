@@ -85,7 +85,7 @@ class render {
 			}
 			
 			if ( ! isset( $metaplate['placement'] ) || ! in_array( $metaplate['placement'], array( 'prepend', 'append', 'replace' ) ) ) {
-				$metaplate['placement'] = 'replace';
+				$metaplate['placement'] = false;
 			}
 
 			$template = $metaplate[ 'html' ][ 'code' ];
@@ -100,7 +100,10 @@ class render {
 				case 'replace':
 					$content = $engine->render( str_replace( '{{content}}', $content, $template ), $template_data );
 					break;
+				default :
+					$content = $engine->render( str_replace( '{{content}}', $content, $template ), $template_data );
 			}
+
 
 		}
 
