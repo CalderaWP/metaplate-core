@@ -9,16 +9,17 @@
  * @copyright 2014 Josh Pollock
  */ 
 
-if ( ! function_exists( 'caldera_metaplate_render' ) ) :
+if ( ! function_exists( 'caldera_metaplate_render' ) ) {
 	/**
 	 * Render and return a metaplate
 	 *
-	 * @param string|array 	$metaplate metaplate name or slug to render
-	 * @param string|int 	$post_id to get meta data from/ if null, use the $post global.
+	 * @param string|array $metaplate metaplate name or slug to render
+	 * @param string|int $post_id to get meta data from/ if null, use the $post global.
+	 * @param array|null $template_data Optional. Array of fields to use to parse metaplate. If null, the default, it will be built from a post-either the one specified by $post_id or global $post.
 	 *
 	 * @return string|null The rendered content if it was able to be rendered.
 	 */
-	function caldera_metaplate_render( $metaplate, $post_id = null ) {
+	function caldera_metaplate_render( $metaplate, $post_id = null, $template_data = null ) {
 		if ( is_string( $metaplate ) ) {
 			$metaplate = calderawp\metaplate\core\data::get_metaplate( $metaplate );
 		}
@@ -29,8 +30,8 @@ if ( ! function_exists( 'caldera_metaplate_render' ) ) :
 
 		}
 
-		$template_data = null;
-		if ( ! is_null( $post_id ) ) {
+
+		if ( is_null( $template_data ) && ! is_null( $post_id ) ) {
 			$template_data = calderawp\metaplate\core\data::get_custom_field_data( $post_id );
 		}
 
@@ -42,7 +43,8 @@ if ( ! function_exists( 'caldera_metaplate_render' ) ) :
 		}
 
 	}
-endif;
+
+}
 
 if ( ! function_exists( 'caldera_metaplate_get_metastack' ) ) {
 	/**
@@ -56,6 +58,7 @@ if ( ! function_exists( 'caldera_metaplate_get_metastack' ) ) {
 		return calderawp\metaplate\core\data::get_metaplate( $id_or_slug );
 
 	}
+
 }
 
 
@@ -98,5 +101,26 @@ if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
 		}
 
 	}
+
 }
 
+if ( ! function_exists( 'caldera_metaplate_from_file' ) ) {
+	/**
+	 * Render a Metaplate using an external HTML file.
+	 *
+	 * @param string $file File path. Can be relative to current theme or absolute. Must be .html or .htm
+	 * @param int $post_id The ID of the post to parse. Not used if $template_data is set.
+	 * @param array|null $template_data Optional. Array of fields to use to parse metaplate. If null, the default, it will be built from a post-either the one specified by $post_id or global $post.
+	 *
+	 * @return null|string
+	 */
+	function caldera_metaplate_from_file( $file, $post_id, $template_data = null ) {
+		$metaplate = calderawp\metaplate\core\file_load::load( $file );
+		if ( is_array( $metaplate ) && isset( $metaplate['html'] ) ) {
+			return caldera_metaplate_render( $metaplate, $post_id, $template_data );
+
+		}
+
+	}
+
+}
