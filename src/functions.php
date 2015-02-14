@@ -5,9 +5,9 @@
  * @package caldera\metaplate\core
  * @author    Josh Pollock <Josh@JoshPress.net>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2014 Josh Pollock
- */ 
+ */
 
 if ( ! function_exists( 'caldera_metaplate_render' ) ) {
 	/**
@@ -92,7 +92,7 @@ if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
 			return;
 
 		}
-		
+
 		$render = new calderawp\metaplate\core\render();
 		$output = $render->render_metaplate( $content, array( $metaplate ) );
 		if ( is_string( $output ) ) {
@@ -116,7 +116,7 @@ if ( ! function_exists( 'caldera_metaplate_from_file' ) ) {
 	 */
 	function caldera_metaplate_from_file( $file, $post_id, $template_data = null ) {
 		$metaplate = calderawp\metaplate\core\file_load::load( $file );
-		if ( is_array( $metaplate ) && isset( $metaplate['html'] ) ) {
+		if ( is_array( $metaplate ) && isset( $metaplate['html']['code'] ) ) {
 			return caldera_metaplate_render( $metaplate, $post_id, $template_data );
 
 		}
