@@ -5,7 +5,7 @@
  * @package calderawp\metaplate\core
  * @author    Josh Pollock <Josh@JoshPress.net>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2015 Josh Pollock
  */
 
@@ -28,7 +28,7 @@ class file_load {
 	public static function load( $file ) {
 		$file = self::locate_template( $file );
 		if ( self::verify_files( $file ) ) {
-			return array( 'html' => file_get_contents( $file ) );
+			return array( 'html' => array( 'code' => file_get_contents( $file ) ) );
 
 		}
 
@@ -43,8 +43,8 @@ class file_load {
 	 */
 	private static function verify_files( $file_path ) {
 		if ( file_exists( $file_path ) && is_file( $file_path ) ) {
-			$extension = pathinfo( $file_path );
-			if ( in_array( $extension, array( 'html', 'htm' ) ) ) {
+			$pathinfo = pathinfo( $file_path );
+			if ( in_array( $pathinfo['extension'], array( 'html', 'htm' ) ) ) {
 				return true;
 
 			}
