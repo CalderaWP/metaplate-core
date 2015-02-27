@@ -46,8 +46,6 @@ class file_load {
 
 		}, 10, 2 );
 
-		$file = file_locator::locate( $file, self::$context );
-
 
 		$file = file_locator::locate( $file, self::$context, true );
 
