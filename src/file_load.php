@@ -19,6 +19,13 @@ use calderawp\file_locator\file_locator;
  */
 class file_load {
 
+	/**
+	 * The context to set for "calderawp_file_locator_allow_extensions" filter
+	 *
+	 * @access protected
+	 *
+	 * @var string
+	 */
 	protected static $context = 'caldera-metaplate';
 
 	/**
