@@ -11,7 +11,6 @@
 
 namespace calderawp\metaplate\core;
 
-use calderawp\helpers\pods;
 use Handlebars\Handlebars;
 use calderawp\filter;
 
@@ -58,37 +57,14 @@ class render {
 		$style_data = null;
 		$script_data = null;
 
-
-		$engine = new Handlebars(  );
-
-		$pods_mode = true;
-		if ( 1==0 && $pods_mode ) {
-			$engine = new Handlebars( array( 'template_class' => 'calderawp\\helpers\\pods' ) );
-		}
-
-
+		$engine = new Handlebars;
 
 		$engine = $this->helpers( $engine );
-
 
 		foreach( $meta_stack as $metaplate ){
 
 			// apply filter to data for this metaplate
 			$template_data = apply_filters( 'metaplate_data', $template_data, $metaplate );
-
-			if ( $pods_mode ) {
-				$pods = pods();
-
-				foreach( $template_data as $field => $value ) {
-					if ( array_key_exists( $field, $pods->fields ) ) {
-						$value = $pods->field( $field, null, true );
-						$template_data[ $field ] =$value;
-					}
-
-				}
-
-			}
-
 
 			// check CSS
 			if ( isset( $metaplate[ 'css' ][ 'code' ] )  ) {
@@ -107,7 +83,7 @@ class render {
 			if ( ! is_null( $placement ) ) {
 				$metaplate[ 'placement' ] = $placement;
 			}
-			
+
 			if ( ! isset( $metaplate['placement'] ) || ! in_array( $metaplate['placement'], array( 'prepend', 'append', 'replace' ) ) ) {
 				$metaplate['placement'] = false;
 			}
@@ -193,12 +169,10 @@ class render {
 		return  array(
 			array(
 				'name' => 'is',
-				'class' => 'calderawp\helpers\is'
-			),
+				'class' => 'calderawp\helpers\is' ),
 			array(
 				'name' => '_image',
-				'class' => 'calderawp\helpers\image'
-			)
+				'class' => 'calderawp\helpers\image' ),
 		);
 
 	}
