@@ -68,6 +68,9 @@ class data {
 	public static function get_custom_field_data( $post_id ) {
 
 		global $post;
+		if ( ! is_object( $post ) ) {
+			$post = get_post( $post_id );
+		}
 
 		$raw_data = get_post_meta( $post_id  );
 
