@@ -5,7 +5,7 @@
  * @package calderawp\metaplate\core
  * @author    Josh Pollock <Josh@JoshPress.net>
  * @license   GPL-2.0+
- * @link      
+ * @link
  * @copyright 2015 Josh Pollock
  */
 
@@ -41,14 +41,16 @@ class file_load {
 
 		$file = file_locator::locate( $file, self::$context );
 
+
+		$file = file_locator::locate( $file, self::$context, true );
+
 		if ( is_string( $file ) ) {
-			return array( 'html' => $file );
+			return array( 'html' => array( 'code' => file_get_contents( $file ) ) );
 
 		}
 
 	}
-
-
+	
 
 }
 

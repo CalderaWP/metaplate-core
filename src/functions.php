@@ -116,7 +116,7 @@ if ( ! function_exists( 'caldera_metaplate_from_file' ) ) {
 	 */
 	function caldera_metaplate_from_file( $file, $post_id, $template_data = null ) {
 		$metaplate = calderawp\metaplate\core\file_load::load( $file );
-		if ( is_array( $metaplate ) && isset( $metaplate['html'] ) ) {
+		if ( is_array( $metaplate ) && isset( $metaplate['html']['code'] ) ) {
 			return caldera_metaplate_render( $metaplate, $post_id, $template_data );
 
 		}
