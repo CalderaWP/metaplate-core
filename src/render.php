@@ -50,6 +50,11 @@ class render {
 
 		}
 
+		// unserilize if needed.
+		foreach( $template_data as &$meta_item ){
+			$meta_item = maybe_unserialize( $meta_item );
+		}
+	
 		// add filter.
 		$magic = new filter\magictag();
 		$content = $magic->do_magic_tag( $content );
