@@ -77,6 +77,7 @@ if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
 			'post_id' => false,
 			'template_code' => false,
 			'css' => false,
+			'sub_shortcodes' => true,
 		), $atts, 'caldera_metaplate' );
 
 		if( $atts['id']  ){
@@ -95,6 +96,11 @@ if ( ! function_exists( 'caldera_metaplate_shortcode' ) ) {
 		
 		$render = new calderawp\metaplate\core\render();
 		$output = $render->render_metaplate( $content, array( $metaplate ) );
+
+		if ( $atts[ 'sub_shortcodes' ] ) {
+			$output = do_shortcode( $output );
+		}
+
 		if ( is_string( $output ) ) {
 			return $output;
 
