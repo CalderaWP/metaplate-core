@@ -174,10 +174,12 @@ class render {
 		return  array(
 			array(
 				'name' => 'is',
-				'class' => 'calderawp\helpers\is' ),
+				'class' => 'calderawp\helpers\is'
+			),
 			array(
 				'name' => '_image',
-				'class' => 'calderawp\helpers\image' ),
+				'class' => 'calderawp\helpers\image'
+			)
 		);
 
 	}
