@@ -32,6 +32,8 @@ class data {
 
 		global $post;
 
+		if( empty( $post ) ){ return; } // no post - return
+
 		// GET METAPLATEs
 		$metaplates = self::get_registry();
 		$meta_stack = array();
