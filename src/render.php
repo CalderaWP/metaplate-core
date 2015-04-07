@@ -33,7 +33,11 @@ class render {
 		if ( is_null( $meta_stack ) ) {
 			$meta_stack = data::get_active_metaplates();
 		}
-
+		
+		// clear out <!--metaplate-->
+		$content = str_replace( '<p><!--metaplate--></p>', '', $content );
+		// in case the wpautop didnt detect the tag.
+		$content = str_replace( '<!--metaplate-->', '', $content );
 
 		if( empty( $meta_stack ) ){
 			return $content;
@@ -57,7 +61,7 @@ class render {
 	
 		// add filter.
 		$magic = new filter\magictag();
-		$content = $magic->do_magic_tag( $content );
+		$content = $magic->do_magic_tag( trim( $content ) );
 
 		$style_data = null;
 		$script_data = null;
@@ -111,6 +115,7 @@ class render {
 
 
 		}
+
 
 		// insert CSS
 		if( ! empty( $style_data ) ){
