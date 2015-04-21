@@ -184,6 +184,14 @@ class render {
 			array(
 				'name' => '_image',
 				'class' => 'calderawp\helpers\image'
+			),
+			array(
+				'name' => 'vardump',
+				'class' => 'calderawp\helpers\vardump'
+			),
+			array(
+				'name' => 'sanitize',
+				'class' => 'calderawp\helpers\sanitize'
 			)
 		);
 
