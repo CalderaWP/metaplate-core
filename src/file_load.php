@@ -31,7 +31,7 @@ class file_load {
 	/**
 	 * Attempts to load a file and if so, puts its contents in an array as expected by Metaplate
 	 *
-	 * @param string $file File path. Can be relative to current theme or absolute. Must be .html or .htm
+	 * @param string $file File path. Can be relative to current theme or absolute. Must be .php, .html or .htm
 	 *
 	 * @return array|void Returns an array 'html' => file contents if possible.
 	 */
@@ -50,7 +50,10 @@ class file_load {
 		$file = file_locator::locate( $file, self::$context, true );
 
 		if ( is_string( $file ) ) {
-			return array( 'html' => array( 'code' => file_get_contents( $file ) ) );
+			ob_start();
+			include $file;
+			$file_contents = apply_filters( 'calderawp_file_locator_html', ob_get_clean(), $file );
+			return array( 'html' => array( 'code' => $file_contents ) );
 
 		}
 
