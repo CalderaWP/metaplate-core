@@ -192,6 +192,10 @@ class render {
 			array(
 				'name' => 'sanitize',
 				'class' => 'calderawp\helpers\sanitize'
+			),
+			array(
+				'name' => 'format_date',
+				'class' => 'calderawp\helpers\date'
 			)
 		);
 
