@@ -219,10 +219,6 @@ class render {
 			array(
 				'name' => 'format_date',
 				'class' => 'calderawp\helpers\date'
-			),
-			array(
-				'name' => 'permalink',
-				'class' => 'calderawp\helpers\permalink'
 			)
 		);
 
