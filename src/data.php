@@ -140,10 +140,14 @@ class data {
 			foreach( $post as $post_key=>$post_value ){
 				$template_data[$post_key] = $post_value;
 			}
-		}
+			// author details
+			$template_data['post_author'] = get_userdata( $template_data['post_author'] );
+			// add permalink
+			$template_data['permalink'] = get_permalink( $post->ID );
+			// core post object
+			$template_data['post_format'] = get_post_format( $post );
 
-		// author details
-		$template_data['post_author'] = get_userdata( $template_data['post_author'] );
+		}
 
 		return $template_data;
 
