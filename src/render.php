@@ -17,6 +17,13 @@ use calderawp\filter;
 class render {
 
 	/**
+	 * List or rendered posts to prevent infinite loop
+	 *
+	 * @var array
+	 */
+	protected $rendered_posts = array();
+
+	/**
 	 * Return the content with metaplate applied.
 	 *
 	 * @uses "the_content" filter
@@ -46,7 +53,15 @@ class render {
 
 		if ( is_null( $template_data ) ) {
 			global $post;
+			$instance_id = $post->ID;
 			$template_data = data::get_custom_field_data( $post->ID );
+
+		}else{
+			$instance_id = md5( $template_data );
+		}
+		// setup the instance record
+		if( !isset( $this->rendered_posts[ $instance_id ] ) ){
+			$this->rendered_posts[ $instance_id ] = array();
 		}
 
 		if( ! $template_data || empty( $template_data ) ){
@@ -71,6 +86,14 @@ class render {
 		$engine = $this->helpers( $engine );
 
 		foreach( $meta_stack as $metaplate ){
+
+			// add metaplate_id to rendered plates for this post
+			if( isset( $this->rendered_posts[ $instance_id ] ) ){
+				if( !empty( $this->rendered_posts[ $instance_id ][ $metaplate['id'] ] ) ){
+					continue;
+				}
+				$this->rendered_posts[ $instance_id ][ $metaplate['id'] ] = true;
+			}
 
 			// apply filter to data for this metaplate
 			$template_data = apply_filters( 'metaplate_data', $template_data, $metaplate );
@@ -196,6 +219,10 @@ class render {
 			array(
 				'name' => 'format_date',
 				'class' => 'calderawp\helpers\date'
+			),
+			array(
+				'name' => 'permalink',
+				'class' => 'calderawp\helpers\permalink'
 			)
 		);
 
