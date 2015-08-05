@@ -142,6 +142,9 @@ class data {
 			}
 		}
 
+		// author details
+		$template_data['post_author'] = get_userdata( $template_data['post_author'] );
+
 		return $template_data;
 
 	}
