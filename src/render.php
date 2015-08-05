@@ -219,6 +219,10 @@ class render {
 			array(
 				'name' => 'format_date',
 				'class' => 'calderawp\helpers\date'
+			),
+			array(
+				'name' => 'callback',
+				'class' => 'calderawp\helpers\callback'
 			)
 		);
 
