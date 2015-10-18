@@ -67,7 +67,12 @@ class access extends array_access_recursive {
 		if ( $this->offsetExists( $offset ) ) {
 			return parent::offsetGet( $offset );
 		} else {
-			$_value = $this->pod->field( $offset );
+			if( 'id' == $offset || 'ID' == $offset ) {
+				$_value = $this->pod->id();
+			}else{
+				$_value = $this->pod->field( $offset );
+			}
+
 			if( $_value ) {
 				parent::offsetSet( $offset, $_value );
 				return $_value;

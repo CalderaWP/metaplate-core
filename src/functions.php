@@ -132,3 +132,19 @@ if ( ! function_exists( 'caldera_metaplate_from_file' ) ) {
 	}
 
 }
+
+if ( ! function_exists( 'caldera_metaplate_pods_mode' ) ) {
+	/**
+	 * Report if Pods mode is in use
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return mixed|void
+	 */
+	function caldera_metaplate_pods_mode() {
+		return apply_filters( 'caldera_metaplate_core_pods_mode', false );
+	}
+
+}
+
+
