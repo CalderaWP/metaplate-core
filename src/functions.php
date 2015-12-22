@@ -15,7 +15,7 @@ if ( ! function_exists( 'caldera_metaplate_render' ) ) {
 	 *
 	 * @param string|array $metaplate metaplate name or slug to render
 	 * @param string|int $post_id to get meta data from/ if null, use the $post global.
-	 * @param array|null $template_data Optional. Array of fields to use to parse metaplate. If null, the default, it will be built from a post-either the one specified by $post_id or global $post.
+	 * @param array|null|Pods $template_data Optional. Array of fields to use to parse metaplate. If null, the default, it will be built from a post-either the one specified by $post_id or global $post.
 	 *
 	 * @return string|null The rendered content if it was able to be rendered.
 	 */
@@ -24,19 +24,21 @@ if ( ! function_exists( 'caldera_metaplate_render' ) ) {
 			$metaplate = calderawp\metaplate\core\data::get_metaplate( $metaplate );
 		}
 
-
 		if ( ! is_array( $metaplate ) ) {
 			return;
 
 		}
 
-
-		if ( is_null( $template_data ) && ! is_null( $post_id ) ) {
+		if( class_exists( 'Pods' ) && is_object( $template_data ) && is_pod( $template_data ) ) {
+			$template_data = new \calderawp\metaplate\core\pods\access( array( $template_data ) );
+			add_filter( 'caldera_metaplate_core_pods_mode', '__return_true' );
+		} elseif ( is_null( $template_data ) && ! is_null( $post_id ) ) {
 			$template_data = calderawp\metaplate\core\data::get_custom_field_data( $post_id );
 		}
 
 		$render = new calderawp\metaplate\core\render();
 		$output = $render->render_metaplate( null, array( $metaplate ), $template_data );
+
 		if ( is_string( $output ) ) {
 			return $output;
 
@@ -130,3 +132,19 @@ if ( ! function_exists( 'caldera_metaplate_from_file' ) ) {
 	}
 
 }
+
+if ( ! function_exists( 'caldera_metaplate_pods_mode' ) ) {
+	/**
+	 * Report if Pods mode is in use
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return mixed|void
+	 */
+	function caldera_metaplate_pods_mode() {
+		return apply_filters( 'caldera_metaplate_core_pods_mode', false );
+	}
+
+}
+
+

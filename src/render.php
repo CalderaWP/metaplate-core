@@ -53,12 +53,17 @@ class render {
 
 		if ( is_null( $template_data ) ) {
 			global $post;
-			$instance_id = $post->ID;
-			$template_data = data::get_custom_field_data( $post->ID );
+			if( caldera_metaplate_pods_mode() ) {
+				$instance_id = $template_data[ 'ID' ];
+			}else{
+				$instance_id   = $post->ID;
+				$template_data = data::get_custom_field_data( $post->ID );
+			}
 
 		}else{
 			$instance_id = md5( json_encode( (array) $template_data ) );
 		}
+
 		// setup the instance record
 		if( !isset( $this->rendered_posts[ $instance_id ] ) ){
 			$this->rendered_posts[ $instance_id ] = array();
@@ -70,8 +75,11 @@ class render {
 		}
 
 		// unserilize if needed.
-		foreach( $template_data as &$meta_item ){
-			$meta_item = maybe_unserialize( $meta_item );
+		if ( true != caldera_metaplate_pods_mode()  ) {
+			foreach ( $template_data as &$meta_item ) {
+				$meta_item = maybe_unserialize( $meta_item );
+			}
+
 		}
 	
 		// add filter.
@@ -86,10 +94,15 @@ class render {
 		$engine = $this->helpers( $engine );
 
 		foreach( $meta_stack as $metaplate ){
+			if( ! isset( $metaplate[ 'id' ] ) ) {
+				$metaplate[ 'id' ] = md5( json_encode( (array) $template_data ) );
+			}
+
 
 			// add metaplate_id to rendered plates for this post
 			if( isset( $this->rendered_posts[ $instance_id ] ) ){
-				if( !empty( $this->rendered_posts[ $instance_id ][ $metaplate['id'] ] ) ){
+
+				if(  ! empty( $this->rendered_posts[ $instance_id ][ $metaplate['id'] ] ) ){
 					continue;
 				}
 				$this->rendered_posts[ $instance_id ][ $metaplate['id'] ] = true;
