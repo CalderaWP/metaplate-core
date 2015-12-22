@@ -57,7 +57,7 @@ class render {
 			$template_data = data::get_custom_field_data( $post->ID );
 
 		}else{
-			$instance_id = md5( $template_data );
+			$instance_id = md5( json_encode( (array) $template_data ) );
 		}
 		// setup the instance record
 		if( !isset( $this->rendered_posts[ $instance_id ] ) ){
